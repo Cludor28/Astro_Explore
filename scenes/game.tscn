@@ -1,11 +1,27 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://sprites/ship.png" type="Texture" id=1]
 [ext_resource path="res://sprites/background.png" type="Texture" id=2]
 [ext_resource path="res://scripts/ship.gd" type="Script" id=3]
-[ext_resource path="res://scenes/lazer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scripts/Background.gd" type="Script" id=4]
+[ext_resource path="res://scenes/asteroid.tscn" type="PackedScene" id=5]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float vel = -.5f;
+uniform float des = 0f;
+
+void fragment(){
+	COLOR = texture(TEXTURE , UV + (vec2(0, 1f) * TIME * vel) + vec2(des , 0) );
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/vel = -0.5
+shader_param/des = 0.0
+
+[sub_resource type="Animation" id=3]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("Ship:frame")
@@ -20,8 +36,7 @@ tracks/0/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "fogo"
+[sub_resource type="Animation" id=4]
 length = 0.2
 loop = true
 tracks/0/type = "value"
@@ -40,11 +55,16 @@ tracks/0/keys = {
 [node name="game" type="Node2D"]
 
 [node name="Background" type="Sprite" parent="."]
+material = SubResource( 2 )
 texture = ExtResource( 2 )
 centered = false
+script = ExtResource( 4 )
+
+[node name="asteroid" parent="Background" instance=ExtResource( 5 )]
+position = Vector2( 84, 33 )
 
 [node name="ship" type="Node2D" parent="."]
-position = Vector2( 80, 265.303 )
+position = Vector2( 84, 270 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
@@ -58,8 +78,8 @@ frame = 1
 [node name="anim" type="AnimationPlayer" parent="ship"]
 autoplay = "fogo"
 playback_speed = 2.0
-anims/RESET = SubResource( 1 )
-anims/fogo = SubResource( 2 )
+anims/RESET = SubResource( 3 )
+anims/fogo = SubResource( 4 )
 
-[node name="lazer" parent="." instance=ExtResource( 4 )]
-position = Vector2( 80, 235 )
+[node name="blaster" type="Position2D" parent="ship"]
+position = Vector2( 0, -32 )

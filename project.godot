@@ -8,6 +8,11 @@
 
 config_version=4
 
+_global_script_classes=[  ]
+_global_script_class_icons={
+
+}
+
 [application]
 
 config/name="shump 2D"
@@ -25,6 +30,12 @@ window/stretch/mode="2d"
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+
+[layer_names]
+
+2d_physics/layer_1="player"
+2d_physics/layer_2="lazer"
+2d_physics/layer_3="meteoro"
 
 [physics]
 
