@@ -15,4 +15,4 @@ func _on_VisibilityNotifier2D_screen_exited():
 
 
 func _on_area_area_entered(area):
-	print(area)
+	queue_free()

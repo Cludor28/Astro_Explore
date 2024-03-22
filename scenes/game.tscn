@@ -1,25 +1,29 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://sprites/ship.png" type="Texture" id=1]
 [ext_resource path="res://sprites/background.png" type="Texture" id=2]
 [ext_resource path="res://scripts/ship.gd" type="Script" id=3]
 [ext_resource path="res://scripts/Background.gd" type="Script" id=4]
-[ext_resource path="res://scenes/asteroid.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scripts/camera.gd" type="Script" id=5]
+[ext_resource path="res://scripts/inimigos.gd" type="Script" id=6]
+[ext_resource path="res://scripts/lazeres.gd" type="Script" id=7]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
 uniform float vel = -.5f;
 uniform float des = 0f;
+uniform float time = 0f;
 
 void fragment(){
-	COLOR = texture(TEXTURE , UV + (vec2(0, 1f) * TIME * vel) + vec2(des , 0) );
+	COLOR = texture(TEXTURE , UV + (vec2(0, 1f) * time * vel) + vec2(des , 0) );
 }"
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
 shader_param/vel = -0.5
 shader_param/des = 0.0
+shader_param/time = 0.0
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -59,9 +63,17 @@ material = SubResource( 2 )
 texture = ExtResource( 2 )
 centered = false
 script = ExtResource( 4 )
+nave = NodePath("../ship")
 
-[node name="asteroid" parent="Background" instance=ExtResource( 5 )]
-position = Vector2( 84, 33 )
+[node name="cenario" type="Node2D" parent="."]
+script = ExtResource( 7 )
+nave = NodePath("../ship")
+
+[node name="inimigos" type="Node2D" parent="cenario"]
+position = Vector2( 0, -1 )
+script = ExtResource( 6 )
+
+[node name="spawn_timer" type="Timer" parent="cenario/inimigos"]
 
 [node name="ship" type="Node2D" parent="."]
 position = Vector2( 84, 270 )
@@ -69,6 +81,7 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
 }
+lazeres = NodePath("../cenario")
 
 [node name="Ship" type="Sprite" parent="ship"]
 texture = ExtResource( 1 )
@@ -83,3 +96,11 @@ anims/fogo = SubResource( 4 )
 
 [node name="blaster" type="Position2D" parent="ship"]
 position = Vector2( 0, -32 )
+
+[node name="camera" type="Camera2D" parent="." groups=[
+"camera",
+]]
+anchor_mode = 0
+current = true
+script = ExtResource( 5 )
+[connection signal="timeout" from="cenario/inimigos/spawn_timer" to="cenario/inimigos" method="_on_spawn_timer_timeout"]
