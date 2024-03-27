@@ -13,8 +13,8 @@ func _process(delta):
 		global_position = Vector2(forca,forca).rotated(time)
 		forca = lerp(forca , 0 , .1)
 
-#	if Input.is_action_just_pressed("ui_cancel"):
-#		treme(3)
+	if Input.is_action_just_pressed("ui_cancel"):
+		treme(3)
 
 func treme(v):
 	forca = v

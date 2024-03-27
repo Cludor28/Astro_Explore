@@ -60,20 +60,12 @@ tracks/0/keys = {
 
 [node name="Background" type="Sprite" parent="."]
 material = SubResource( 2 )
+position = Vector2( -2, -2 )
+scale = Vector2( 1.025, 1.01389 )
 texture = ExtResource( 2 )
 centered = false
 script = ExtResource( 4 )
 nave = NodePath("../ship")
-
-[node name="cenario" type="Node2D" parent="."]
-script = ExtResource( 7 )
-nave = NodePath("../ship")
-
-[node name="inimigos" type="Node2D" parent="cenario"]
-position = Vector2( 0, -1 )
-script = ExtResource( 6 )
-
-[node name="spawn_timer" type="Timer" parent="cenario/inimigos"]
 
 [node name="ship" type="Node2D" parent="."]
 position = Vector2( 84, 270 )
@@ -96,6 +88,15 @@ anims/fogo = SubResource( 4 )
 
 [node name="blaster" type="Position2D" parent="ship"]
 position = Vector2( 0, -32 )
+
+[node name="cenario" type="Node2D" parent="."]
+script = ExtResource( 7 )
+nave = NodePath("../ship")
+
+[node name="inimigos" type="Node2D" parent="cenario"]
+script = ExtResource( 6 )
+
+[node name="spawn_timer" type="Timer" parent="cenario/inimigos"]
 
 [node name="camera" type="Camera2D" parent="." groups=[
 "camera",
