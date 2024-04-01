@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
 
 
@@ -15,17 +15,17 @@ func _process(delta):
 		queue_free()
 "
 
-[sub_resource type="CanvasItemMaterial" id=5]
+[sub_resource type="CanvasItemMaterial" id=2]
 blend_mode = 1
 
-[sub_resource type="Gradient" id=1]
+[sub_resource type="Gradient" id=3]
 offsets = PoolRealArray( 0, 0.4, 0.725926, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 1 )
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
 
-[sub_resource type="ParticlesMaterial" id=3]
+[sub_resource type="ParticlesMaterial" id=5]
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -35,7 +35,7 @@ orbit_velocity_random = 0.0
 damping = 42.73
 scale = 15.0
 scale_random = 0.82
-color_ramp = SubResource( 2 )
+color_ramp = SubResource( 4 )
 
 [sub_resource type="ParticlesMaterial" id=6]
 flag_disable_z = true
@@ -48,15 +48,15 @@ orbit_velocity_random = 0.0
 color = Color( 1, 0.92549, 0, 1 )
 
 [node name="explosion" type="Node2D"]
-script = SubResource( 4 )
+script = SubResource( 1 )
 
 [node name="particles" type="Particles2D" parent="."]
-material = SubResource( 5 )
+material = SubResource( 2 )
 emitting = false
 amount = 50
 one_shot = true
 explosiveness = 0.89
-process_material = SubResource( 3 )
+process_material = SubResource( 5 )
 
 [node name="sparks" type="Particles2D" parent="."]
 emitting = false

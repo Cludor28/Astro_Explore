@@ -17,4 +17,4 @@ func _process(delta):
 		treme(3)
 
 func treme(v):
-	forca = v
+	forca += v

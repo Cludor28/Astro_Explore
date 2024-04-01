@@ -24,10 +24,17 @@ func restartTimer():
 
 func on_asteroid_destroied(ast):
 	if ast.chosen >= 3:
-		var new_ast = create_asteroid()
-		add_child(new_ast)
-		new_ast.global_position = ast.global_position
+		for a in range((randi() % 2) + 2):
+			var new_ast = create_asteroid()
+			new_ast.chosen = (randi() % 2) + 1
+			add_child(new_ast)
+			new_ast.global_position = ast.global_position
+	get_tree().call_group("hud" ,  "asteroid_destroied" , ast)
+	var e = PRE_EXPLOSION.instance()
+	add_child(e)
+	e.global_position = ast.global_position
 
 func create_asteroid():
 	var ast = PRE_ASTEROID.instance()
 	ast.connect("destroied" , self , "on_asteroid_destroied")
+	return ast

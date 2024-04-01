@@ -2,7 +2,7 @@ extends Node2D
 
 var chosen = 0
 onready var velY = rand_range(30 , 200)
-onready var velX = rand_range(-30 , 30)
+onready var velX = rand_range(-50 , 50)
 
 signal destroied(node)
 
@@ -10,8 +10,8 @@ func _ready():
 	randomize()
 	for a in $asteroids.get_children():
 		a.visible = false
-	
-	chosen = (randi() % $asteroids.get_child_count()) + 1
+	if not chosen: 
+		chosen = (randi() % $asteroids.get_child_count()) + 1
 	
 	var node = get_node("asteroids/asteroid-" + str(chosen))
 	
