@@ -19,7 +19,7 @@ func _on_spawn_timer_timeout():
 	restartTimer()
 
 func restartTimer():
-	$spawn_timer.wait_time = rand_range(.2 , 1)
+	$spawn_timer.wait_time = rand_range(.5 , 3)
 	$spawn_timer.start()
 
 func on_asteroid_destroied(ast):

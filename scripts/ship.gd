@@ -4,7 +4,9 @@ const PRE_LAZER = preload("res://scenes/lazer.tscn")
 
 export var vel = 100.0
 
-var escudo = 100
+var escudo = 100.0
+
+onready var escudo_size =  $escudo/sprite.material.get_shader_param("size")
 
 onready var shape_size = $area/shape.shape.radius
 
@@ -52,11 +54,13 @@ func _process(delta):
 
 
 func _on_area_area_entered(area):
+	print(escudo_size)
 	get_tree().call_group("camera" , "treme" , 1)
-	escudo -= 1
-	$area/shape.shape.radius = shape_size * escudo / 100
+	escudo -= .35
+	var proporcao = escudo / 100.0
+	$area/shape.shape.radius = shape_size * proporcao
+	$escudo/sprite.material.set_shader_param("size" , escudo_size * escudo / 100.0)
 	
-
-
 func _on_dead_area_area_entered(area):
-	queue_free()
+	visible = false
+	set_process(false)
