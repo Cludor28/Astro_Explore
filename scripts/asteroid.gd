@@ -52,8 +52,14 @@ func _on_area_area_entered(area):
 	hp -= 1
 	knock_back = 100
 	if not hp:
-		get_tree().call_group("camera" , "treme" , 1)
-		emit_signal("destroied" , self)
-		queue_free()
+		destroy()
 	else:
 		get_tree().call_group("camera" , "treme" , 1)
+
+func destroy():
+	get_tree().call_group("camera" , "treme" , 1)
+	emit_signal("destroied" , self)
+	queue_free()
+
+func get_hp_inicial():
+	return hps[chosen - 1]

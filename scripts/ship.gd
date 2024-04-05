@@ -51,9 +51,9 @@ func _process(delta):
 	global_position.x = clamp(global_position.x , 21 , 139)
 	global_position.y = clamp(global_position.y , 24 , 266)
 
-
-
 func _on_area_area_entered(area):
+	if area.get_parent().has_method("destroy"):
+		area.get_parent().destroy()
 	print(escudo_size)
 	get_tree().call_group("camera" , "treme" , 1)
 	escudo -= .35

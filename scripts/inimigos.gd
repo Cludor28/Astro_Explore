@@ -2,6 +2,7 @@ extends Node2D
 
 const PRE_ASTEROID = preload("res://scenes/asteroid.tscn")
 const PRE_EXPLOSION = preload('res://scenes/explosion.tscn')
+const PRE_CRISTAL = preload("res://scenes/cristal.tscn")
 
 export(NodePath) var nave
 
@@ -33,6 +34,11 @@ func on_asteroid_destroied(ast):
 	var e = PRE_EXPLOSION.instance()
 	add_child(e)
 	e.global_position = ast.global_position
+
+	for a in range(ast.get_hp_inicial()):
+		var c = PRE_CRISTAL.instance()
+		add_child(c)
+		c.global_position = ast.global_position
 
 func create_asteroid():
 	var ast = PRE_ASTEROID.instance()
