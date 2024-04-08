@@ -82,7 +82,9 @@ centered = false
 script = ExtResource( 4 )
 nave = NodePath("../ship")
 
-[node name="ship" type="Node2D" parent="."]
+[node name="ship" type="Node2D" parent="." groups=[
+"player",
+]]
 position = Vector2( 80, 264 )
 script = ExtResource( 3 )
 __meta__ = {

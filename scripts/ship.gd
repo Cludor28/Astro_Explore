@@ -52,14 +52,16 @@ func _process(delta):
 	global_position.y = clamp(global_position.y , 24 , 266)
 
 func _on_area_area_entered(area):
+	
 	if area.get_parent().has_method("destroy"):
 		area.get_parent().destroy()
-	print(escudo_size)
-	get_tree().call_group("camera" , "treme" , 1)
-	escudo -= .35
-	var proporcao = escudo / 100.0
-	$area/shape.shape.radius = shape_size * proporcao
-	$escudo/sprite.material.set_shader_param("size" , escudo_size * escudo / 100.0)
+	
+	if [4].find(area.collision_layer) >= 0:
+		get_tree().call_group("camera" , "treme" , 1)
+		escudo -= .35
+		var proporcao = escudo / 100.0
+		$area/shape.shape.radius = shape_size * proporcao
+		$escudo/sprite.material.set_shader_param("size" , escudo_size * proporcao)
 	
 func _on_dead_area_area_entered(area):
 	visible = false
